@@ -24,19 +24,32 @@ RUN apt-get install -y systemd
 ############################## Run Code-server ##############################
 #############################################################################
 
+ENV PWD=test1234
+
 WORKDIR /root
 RUN mkdir /code-server
-RUN cd /code-server
-
-# RUN wget https://github.com/cdr/code-server/releases/download/2.1692-vsc1.39.2/code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
+WORKDIR /root/code-server
 
 RUN wget https://github.com/cdr/code-server/releases/download/v3.10.0/code-server-3.10.0-linux-amd64.tar.gz 
 
 RUN tar -xzvf code-server-3.10.0-linux-amd64.tar.gz 
-RUN cd code-server-3.10.0-linux-amd64
-RUN cd code-server-3.10.0-linux-amd64 
+WORKDIR /root/code-server/code-server-3.10.0-linux-amd64
 
-RUN cp code-server-3.10.0-linux-amd64/code-server /usr/local/bin
+RUN cp code-server /usr/local/bin
 RUN mkdir /var/lib/code-server 
- 
 
+WORKDIR /lib/systemd/system
+RUN echo "[Unit]\n" \
+         "Description=code-server\n" \
+         "After=nginx.service\n" \
+         "\n" \
+         "[Service]\n" \
+         "Type=simple\n" \
+         "Environment=PASSWORD=test123\n" \
+         "ExecStart=/usr/local/bin/code-server --host 127.0.0.1 --user-data-dir /var/lib/code-server --auth password\n" \
+         "Restart=always\n" \
+         "\n" \
+         "[Install]\n" \
+         "WantedBy=multi-user.target" > code-server.service
+         
+CMD systemctl start code-server
