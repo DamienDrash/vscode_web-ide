@@ -74,7 +74,7 @@ CMD ln -s /etc/nginx/sites-available/code-server.conf /etc/nginx/sites-enabled/c
 CMD nginx -t
 CMD systemctl restart nginx
 
-RUN add-apt-repository ppa:certbot/certbot
+CMD add-apt-repository ppa:certbot/certbot
 RUN apt install python-certbot-nginx
 CMD ufw allow https
 CMD ufw reload
