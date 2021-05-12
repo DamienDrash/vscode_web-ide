@@ -34,7 +34,7 @@ RUN wget https://github.com/cdr/code-server/releases/download/v3.10.0/code-serve
 
 RUN tar -xzvf code-server-3.10.0-linux-amd64.tar.gz 
 RUN cd code-server-3.10.0-linux-amd64
-RUN ls code-server-3.10.0-linux-amd64 
+RUN cd code-server-3.10.0-linux-amd64 
 
 RUN cp code-server /usr/local/bin
 RUN mkdir /var/lib/code-server 
