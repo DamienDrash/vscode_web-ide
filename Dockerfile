@@ -20,3 +20,19 @@ RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 #############################################################################
 ############################## Run Code-server ##############################
 #############################################################################
+
+WORKDIR /root
+RUN mkdir /code-server
+RUN cd /code-server
+
+# RUN wget https://github.com/cdr/code-server/releases/download/2.1692-vsc1.39.2/code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
+
+RUN wget https://github.com/cdr/code-server/releases/download/v3.10.0/code-server-3.10.0-linux-x86_64.tar.gz 
+
+RUN tar -xzvf code-server-3.10.0-linux-x86_64.tar.gz 
+RUN cd code-server-3.10.0-linux-x86_64.tar.gz
+
+RUN cp code-server /usr/local/bin
+RUN mkdir /var/lib/code-server 
+ 
+
