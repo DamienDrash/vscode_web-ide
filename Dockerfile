@@ -24,5 +24,6 @@ RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 RUN apt-get install -y systemd
 RUN apt-get install -y curl
 RUN curl -fsSL https://code-server.dev/install.sh | sh
+RUN service --status-all
 RUN systemctl enable --now code-server@root
 # // Created symlink /etc/systemd/system/default.target.wants/code-server@root.service → /lib/systemd/system/code-server@.service.
