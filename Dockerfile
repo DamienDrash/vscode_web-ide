@@ -52,4 +52,31 @@ RUN echo "[Unit]\n" \
          "[Install]\n" \
          "WantedBy=multi-user.target" > code-server.service
          
+CMD systemctl enable code-server
 CMD systemctl start code-server
+
+WORKDIR /etc/nginx/sites-available
+RUN echo "server {\n" \
+         "    listen 80;\n" \
+         "    listen [::]:80;\n" \
+         "\n" \
+         "    server_name code.lab.frigew.ski;\n" \
+         "\n" \
+         "    location / {\n" \
+         "        proxy_pass http://localhost:8080/;\n" \
+         "        proxy_set_header Upgrade $http_upgrade;\n" \
+         "        proxy_set_header Connection upgrade;\n" \
+         "        proxy_set_header Accept-Encoding gzip;\n" \
+         "    }\n" \
+         "}\n" > code-server.conf
+
+RUN ln -s /etc/nginx/sites-available/code-server.conf /etc/nginx/sites-enabled/code-server.conf
+RUN nginx -t
+CMD systemctl restart nginx
+
+RUN add-apt-repository ppa:certbot/certbot
+RUN apt install python-certbot-nginx
+RUN ufw allow https
+RUN ufw reload
+
+EXPOSE 8080
