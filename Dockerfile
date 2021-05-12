@@ -32,7 +32,7 @@ RUN cd /code-server
 
 RUN wget https://github.com/cdr/code-server/releases/download/v3.10.0/code-server-3.10.0-linux-x86_64.tar.gz 
 
-RUN tar -xzvf code-server-3.10.0-linux-x86_64.tar.gz 
+RUN tar -xzvf code-server-3.10.0-linux-amd64.tar.gz 
 RUN cd code-server-3.10.0-linux-amd64.tar.gz
 
 RUN cp code-server /usr/local/bin
