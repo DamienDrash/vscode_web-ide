@@ -70,13 +70,13 @@ RUN echo "server {\n" \
          "    }\n" \
          "}\n" > code-server.conf
 
-RUN ln -s /etc/nginx/sites-available/code-server.conf /etc/nginx/sites-enabled/code-server.conf
-RUN nginx -t
+CMD ln -s /etc/nginx/sites-available/code-server.conf /etc/nginx/sites-enabled/code-server.conf
+CMD nginx -t
 CMD systemctl restart nginx
 
 RUN add-apt-repository ppa:certbot/certbot
 RUN apt install python-certbot-nginx
-RUN ufw allow https
-RUN ufw reload
+CMD ufw allow https
+CMD ufw reload
 
 EXPOSE 8080
