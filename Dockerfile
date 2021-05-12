@@ -21,6 +21,7 @@ RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 ############################## Run Code-server ##############################
 #############################################################################
 
+RUN sudo apt-get install -y systemd
 RUN apt-get install -y curl
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 RUN systemctl enable --now code-server@root
