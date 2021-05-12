@@ -36,7 +36,7 @@ RUN tar -xzvf code-server-3.10.0-linux-amd64.tar.gz
 RUN cd code-server-3.10.0-linux-amd64
 RUN cd code-server-3.10.0-linux-amd64 
 
-RUN cp code-server /usr/local/bin
+RUN cp code-server-3.10.0-linux-amd64/code-server /usr/local/bin
 RUN mkdir /var/lib/code-server 
  
 
