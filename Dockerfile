@@ -75,7 +75,7 @@ CMD nginx -t
 CMD systemctl restart nginx
 
 CMD add-apt-repository ppa:certbot/certbot
-RUN apt install python-certbot-nginx
+RUN apt-get install -y python-certbot-nginx
 CMD ufw allow https
 CMD ufw reload
 
