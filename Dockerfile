@@ -31,8 +31,10 @@ RUN apt-get -yq update
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 CMD systemctl enable --now code-server@root
 
-RUN /root/.config
-RUN /root/.config/code-server
+WORKDIR /root
+RUN mkdir /root/.config
+RUN mkdir /root/.config/code-server
+WORKDIR /root/.config/code-server
 RUN echo "bind-addr: 0.0.0.0:8080\n" \
          "auth: password\n" \
          "password: MyFlutter-0213f\n" \
