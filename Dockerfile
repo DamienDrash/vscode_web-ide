@@ -29,7 +29,7 @@ ENV PWD=test1234
 
 RUN apt-get -yq update
 RUN curl -fsSL https://code-server.dev/install.sh | sh
-CMD systemctl enable --now code-server@root
+CMD ["systemctl enable --now code-server@root"]
 
 WORKDIR /root
 RUN mkdir /root/.config
@@ -40,7 +40,7 @@ RUN echo "bind-addr: 0.0.0.0:8080\n" \
          "password: MyFlutter-0213f\n" \
          "cert: false" > config.yaml
 
-CMD systemctl restart code-server@root
+CMD ["systemctl restart code-server@root"]
 
 WORKDIR /root
 
