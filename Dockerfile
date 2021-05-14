@@ -40,7 +40,8 @@ RUN echo "bind-addr: 0.0.0.0:8080\n" \
          "password: MyFlutter-0213f\n" \
          "cert: false" > config.yaml
 
-CMD ["systemctl restart code-server@root"]
+RUN service code-server@root start
+# CMD ["systemctl restart code-server@root"]
 
 WORKDIR /root
 
