@@ -25,5 +25,3 @@ ENV LANG=en_US.UTF-8
 ENV TERM=xterm
 
 WORKDIR /root
-
-EXPOSE 8080
