@@ -35,7 +35,8 @@ RUN apt-get install git -y
 RUN apt-get install unzip -y
 RUN apt-get install zip -y
 RUN git clone https://github.com/flutter/flutter.git
-RUN export PATH="$PATH:/root/flutter/bin"
+ENV PATH="$PATH:/usr/lib/dart/bin"
+RUN export PATH="$PATH:/usr/lib/dart/bin"
 RUN flutter doctor
 
 RUN flutter channel beta
