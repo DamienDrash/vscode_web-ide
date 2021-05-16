@@ -14,37 +14,37 @@ USER root
 
 ENTRYPOINT /init
 
-ENV PUID=1000
-ENV PGID=1000
+ENV PUID=0
+ENV PGID=0
+ENV DOCKER_USER=root
 ENV TZ=Europe/Berlin
 ENV PASSWORD=DDrash2305
 ENV SUDO_PASSWORD=DDrash2305
 ENV PROXY_DOMAIN=code.lab.frigew.ski
-ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/flutter/bin:/usr/lib/dart/bin
-ENV HOME=/root/config
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/flutter/bin:/usr/lib/dart/bin
+ENV HOME=/config
 ENV LANGUAGE=en_US.UTF-8
 ENV LANG=en_US.UTF-8
 ENV TERM=xterm
 
-WORKDIR /root
+WORKDIR /
 
 #####################################################################
 ############################## FLUTTER ##############################
 #####################################################################
 
-RUN apt-get install curl -y
-RUN apt-get install git -y
-CMD ["apt-get install unzip -y"]
-CMD ["apt-get install zip -y"]
+RUN apt-get update -y
+RUN apt-get install curl --yes \
+&& apt-get install git unzip zip --yes
 RUN git clone https://github.com/flutter/flutter.git
-# ENV PATH="$PATH:/usr/lib/dart/bin"
-# RUN export PATH="$PATH:/usr/lib/dart/bin"
-CMD ["flutter doctor"]
+ENV PATH="/flutter/bin:$PATH"
+RUN export PATH="/flutter/bin:$PATH"
+RUN flutter doctor
 
-CMD ["flutter channel beta"]
-CMD ["flutter upgrade"]
-CMD ["flutter config --enable-web"]
-CMD ["flutter devices"]
+RUN flutter channel beta
+RUN flutter upgrade
+RUN flutter config --enable-web
+RUN flutter devices
 
 ######################################################################
 ################################ DART ################################
@@ -59,8 +59,8 @@ RUN sh -c 'wget -qO- https://storage.googleapis.com/download.dartlang.org/linux/
 RUN apt-get update
 RUN apt-get install dart
 
-# ENV PATH="$PATH:/usr/lib/dart/bin"
-# RUN echo 'export PATH="$PATH:/usr/lib/dart/bin"' >> ~/.profile
+ENV PATH="/usr/lib/dart/bin:$PATH"
+RUN echo 'export PATH="/usr/lib/dart/bin:$PATH"' >> ~/.profile
 
 ######################################################################
 ############################### PYTHON ###############################
@@ -68,3 +68,14 @@ RUN apt-get install dart
 
 RUN apt-get install python3 -y
 RUN apt install python3-pip -y
+
+RUN code-server --install-extension alexisvt.flutter-snippets
+RUN code-server --install-extension dart-code.flutter
+RUN code-server --install-extension ms-toolsai.jupyter
+RUN code-server --install-extension redhat.vscode-yaml
+RUN code-server --install-extension dart-code.dart-code
+RUN code-server --install-extension ms-python.python
+RUN code-server --install-extension nash.awesome-flutter-snippets
+RUN code-server --install-extension tushortz.python-extended-snippets
+
+CMD ["/bin/bash"]
